@@ -14,21 +14,30 @@ class State:
                  U=None,
                  M=None,
                  rho=None,
-                 P=th.P_, 
-                 T=th.T_,
-                 gamma=th.gamma_,
+                 P=None, 
+                 T=None,
+                 gamma=None,
                  ID=None,
                  bool_total=False):
-
+        
+        # ID DEFINITION (automatic increase)
         self.ID = ID
         if not ID:
             self.ID = type(self)._ID
             type(self)._ID += 1
-
+       
+        # SET GAMMA
         self.gamma = gamma
+        if not gamma:
+            self.gamma = th.gamma_
+        
+        # SET TEMPERATURE
         self.T = T
-        self.a = th.MachNumber(self.gamma,self.T)
+        if not T:
+            self.T = th.T_
 
+        # SET VELOCITIES
+        self.a = th.MachNumber(self.gamma,self.T)
         self.U = U
         self.M = M
 
@@ -42,17 +51,22 @@ class State:
         if not M:
             self.U = U
             self.M = th.U2M(U)
-
+        
+        # SET THERMO VARIABLES
+        
         self.P = P
-        if not rho:
-            rho = self.P / (th.R * self.T)
+        if not P:
+            self.P = th.P_
+        
         self.rho = rho
+        if not rho:
+            self.rho = self.P / (th.R * self.T)
 
         if not bool_total:
             M0 = 1
-            T0r = th.T0_ratio(self.M,gamma)
-            P0r = th.P0_ratio(self.M,gamma)
-            Rho0r = th.RHO0_ratio(self.M,gamma)
+            T0r = th.T0_ratio(self.M,self.gamma)
+            P0r = th.P0_ratio(self.M,self.gamma)
+            Rho0r = th.RHO0_ratio(self.M,self.gamma)
             self.TotalState = State(
                     M=M0,
                     rho = Rho0r * self.rho,
@@ -61,6 +75,7 @@ class State:
                     ID = -1,
                     bool_total = True,
                     )
+
 
 
     def __str__(self)->str:
@@ -75,6 +90,7 @@ class State:
             str+= f" - P0/P = {self.TotalState.P / self.P} \n"
             str+= f" - T0/T = {self.TotalState.T / self.T} \n"
             str+= "-------------------- \n"
+            str+= f" - Perfect : {th.isPerfectGas(self)}\n"
         else:
             str =  "~~~ Total State : ~~~\n"
             str+= f" - P0 = {self.P} Pa\n"
@@ -85,11 +101,11 @@ class State:
     def NormalShock(self,bool_print=False):
         if self.M < 1:
             raise ValueError("M<1 : No shock")
-        Ur = th.U_ratio(self.M)
-        Mr = th.M_ratio(self.M)
-        Rhor = th.RHO_ratio(self.M)
-        Pr = th.P_ratio(self.M)
-        Tr = th.T_ratio(self.M)
+        Ur = th.U_ratio(self.M,self.gamma)
+        Mr = th.M_ratio(self.M,self.gamma)
+        Rhor = th.RHO_ratio(self.M,self.gamma)
+        Pr = th.P_ratio(self.M,self.gamma)
+        Tr = th.T_ratio(self.M,self.gamma)
         outputState = State(
                     U = Ur * self.U,
                     M = Mr * self.M,
@@ -187,6 +203,3 @@ class State:
             print(str)
 
         return outputState
-
-
-        

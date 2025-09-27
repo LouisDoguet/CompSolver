@@ -99,3 +99,6 @@ def P_ratio_PM(M1,M2,g=gamma_):
 
 def RHO_ratio_PM(M1,M2,g=gamma_):
     return T_ratio_PM(M1,M2,g) ** (1/(g-1))
+
+def isPerfectGas(state):
+    return state.P/(state.rho * R * state.T)
