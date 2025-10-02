@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-import CompSolver.thermo as th
-import CompSolver.utils as ut
+import CompSolver.lib.thermo as th
+import CompSolver.lib.utils as ut
 
 ID = 0
 
