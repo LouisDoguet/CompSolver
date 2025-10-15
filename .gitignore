@@ -1,0 +1,25 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment
+.venv/
+venv/
+env/
+comp-venv/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE stuff
+.vscode/
+.idea/
+
+# Build / dist
+build/
+dist/
+*.egg-info/
