@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 import CompSolver.lib.thermo as th
 import CompSolver.lib.utils as ut
+import CompSolver.lib.similarity as sim
 import CompSolver.lib.newtonian as nw
 
 ID = 0
@@ -101,6 +102,7 @@ class State:
 
 
 
+
     def __str__(self)->str:
         if self.ID != -1:
             str = f"#### STATE {self.ID} : #### \n"
@@ -153,18 +155,7 @@ class State:
             str+= "-------------------- \n"
             print(str)
 
-        return outputState   
-
-    def CpShockSimilarity(self, angle):
-        K = self.M * np.deg2rad(angle)
-        return nw.ShockSimilarity(K,self.gamma)*np.deg2rad(angle)**2
-
-    def CpExpSimilarity(self, angle):
-        K = self.M * np.deg2rad(angle)
-        return nw.PrandtlMeyerSimilarity(K,self.gamma)*np.deg2rad(angle)**2
-
-    def Cp(self, state0):
-        return 2/(self.gamma*state0.M**2) * ((self.P/state0.P) - 1)
+        return outputState
     
     def AngleShock(self, beta=None, theta=None, bool_weak=True, bool_print=False):
 
