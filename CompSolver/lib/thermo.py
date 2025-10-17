@@ -52,7 +52,7 @@ def getBeta(theta, M, bool_weak=True, g=gamma_):
     if not bool_weak:
         B_init = np.deg2rad(80)
     else:
-        B_init = np.deg2rad(40)
+        B_init = np.deg2rad(44.4)
 
     a = (1 + (g-1)/2 * M**2) * np.tan(theta) 
     b = (M**2 - 1)
@@ -66,7 +66,7 @@ def getBeta(theta, M, bool_weak=True, g=gamma_):
         res = alg[0]
         err = alg[1]
 
-    return np.rad2deg(res)
+    return abs(np.rad2deg(res))
 
 def algoNewton(a, b, c, x):
     res = (2*a*x**3 - b*x**2 - 1)/( 3*a*x**2 - 2*b*x + c )

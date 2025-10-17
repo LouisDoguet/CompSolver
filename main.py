@@ -1,9 +1,6 @@
 import CompSolver as cs
-import numpy as np
 
-s0 = cs.State(M=10)
-
-PLATE = cs.FlatPlate('fp1',-18,s0)
-PLATE.Solve()
-
-print(PLATE)
+inf_state = cs.State(M=10)
+flat_plate = cs.FlatPlate(18, inf_state)
+flat_plate.Solve()
+print(flat_plate)

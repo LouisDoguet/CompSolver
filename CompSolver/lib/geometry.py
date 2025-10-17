@@ -6,13 +6,13 @@ import CompSolver.lib.state as state
 
 
 class Geometry:
-    def __init__(self,name):
-        self.name = name
+    def __init__(self):
+        pass
 
 
 class FlatPlate(Geometry):
-    def __init__(self, name, theta, state0:state.State):
-        super().__init__(name)
+    def __init__(self, theta, state0:state.State):
+        super().__init__()
 
         self.theta = theta
         self.previous_state = state0
